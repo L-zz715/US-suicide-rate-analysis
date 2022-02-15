@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+    <title>US Suicide Rate Visualisation Project</title>
+</head>
+
+
+<!--Plugin CSS file with desired skin-->
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
+
+<!--jQuery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!--Plugin JavaScript file-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+
+
+
+<body>
+
+    
+
+    <div class="home_area">
+      
+        <div class="main_title">
+            
+            <h3 class="intro">FIT5147 Narrative Visualisation Project</h3>
+        <div class="sub_title">
+            <h3 class="desg" >US Suicide Rate</h3></div>
+    
+        </div>
+        <div class="home_backg" pos><img src="./3.jpg" alt="" height="500px" ></div>
+        <div class="scroll_hint">Please Scroll Down and Read</div>
+        <div class="arrow1" pos><img src="./expand_arrow.png" alt="" height="60px" ></div>
+        
+    </div>
+
+
+    <div class="p_1">
+        
+    
+    
+        <section class="map1_title" >
+            <div>
+                <h3 id='maptitle'>US suicide Rate (2015~2019)</h3>
+            </div>
+            
+           
+            <div id='map_description1'>
+                Through filter button to change Year and view suicide rate of US <br>in different year
+            </div>
+    
+                <!-- Initialize a select button -->
+            <span style="font-size: 25px; position: relative;top: 0px;left: 2px;">
+                
+                <text id = "y1" fill='black'>Year</text>
+                <select id="dropdown"></select>
+            
+            </span>
+            
+            <div id='tooltip'>
+        
+            </div>
+        
+        
+            <svg id="canvas" >
+                
+        
+            </svg>
+            <div>
+                <svg id='legend'>
+                    <rect x='10' y='0'  width="120" height= "30" style="fill: #e7d9f4;stroke-width: 3"/>
+                    <text x='0'  y='50' fill='black' style="font-size: 18px;">less than 5%</text>
+                    <rect x='120' y='0'  width="120" height= "30" style="fill: #ceb4e9;stroke-width: 3"/>
+                    <text x='130'  y='50' fill='black' style="font-size: 18px;">5% to 10%</text>
+                    <rect x='240' y='0'  width="120" height= "30" style="fill: #b48fde;stroke-width: 3"/>
+                    <text x='240'  y='50' fill='black' style="font-size: 18px;">10% to 15%</text>
+                    <rect x='360' y='0'  width="120" height= "30" style="fill: #996bd2;stroke-width: 3"/>
+                    <text x='360'  y='50' fill='black' style="font-size: 18px;">15% to 20%</text>
+                    <rect x='480' y='0'  width="120" height= "30" style="fill: #7b47c6;stroke-width: 3"/>
+                    <text x='480'  y='50' fill='black' style="font-size: 18px;">20% to 25%</text>
+                    <rect x='600' y='0'  width="120" height= "30" style="fill: #591eba;stroke-width: 3"/>
+                    <text x='600'  y='50' fill='black' style="font-size: 18px;">25% to 30%</text>
+                    <rect x='720' y='0'  width="120" height= "30" style="fill: #3f1a78;stroke-width: 3"/>
+                    <text x='720'  y='50' fill='black' style="font-size: 18px;">more than 30%</text>
+                    
+                </svg>
+            </div>
+        
+            </section>
+
+            <section class="part_1" >
+                <div id="p1_title">
+                    <h3 id='part1_title'>Part1: US Suicide Rate by State</h3>
+                </div>
+     
+                <div id='map_description'>
+                   From 2015~2019 the suicide rate of almost half the states of US <br>have significant change
+                    in suicide rate. The Northwestern United <br> States have higher suicide rate througn these 5 years.
+                
+                </div>
+            </section>
+
+
+            <div class="pageNo1">
+                <h3>2</h3>
+            </div>
+   
+       
+    </div>
+
+  
+
+
+    <div class="p_2">
+        <section class="part_2" >
+            <h3 id='part2_title'>Part2: The Age of Suicide People</h3>
+            <div id='pie_description'>
+                From 2015~2019 the suicide rate of different age group does not have large change.
+                Adults who <br>are in working age has higher suicide rate, they may face higher mental 
+                pressure(Shown below). <br>Is it possible that the pressure comes from employment issue (see page 4)?
+            </div>
+        </section>
+    
+    
+    
+        <div id='tooltipNew'>
+            <p><strong>Age Group</strong>
+            </p>
+            <p><span id="value"></span>%</p>
+        </div>
+    
+        <div id='piepart'>
+        <section class="pie_title" >
+            <h3 id='pietitle1'>US Suicide Rate by Age Group</h3>
+            <h4 id='pie_description'>The pie chart shows the suicide rate by age group, the legend shows different age groups</h4>
+    
+        </section>
+    
+        <section class="drop4" >
+            <text id = "ye2" fill='black' >Year</text>
+            <select id="dropdown4">
+    
+            </select>
+        </section>
+        </div>
+    
+        
+
+        <div class="pieCh">
+    
+        </div>
+
+        <div class="pageNo2">
+            <h3 >3</h3>
+        </div>
+
+    </div>
+
+   
+    <div class="p_3">
+        <section class="part_3" >
+            <h3 id='part3_title'>Part3: Does Unemployment Problem has Impact with Suicide Rate?</h3>
+            <div id='unemploy_description'>
+                This part shows the comparison between unemployed and employed population.<br> Through this chart,
+                the trend of unemployed rate can be seen and filter by state.
+            </div>
+        </section>
+    
+    
+    
+        <section class="bar1_title" >
+            <h3 id='bartitle1'>US Unemployed and Employed Population</h3>
+    
+        </section>
+    
+        <span style="font-size: 25px; position: relative;top: 0px;left: 180px;">
+            
+            <text id = "stateChoose" fill='black'>State</text>
+            <select id="dropdown2"></select>
+        
+        </span>
+    
+    
+        <div id='tooltipNew2'>
+            <p><strong>population</strong>
+            </p>
+            <p><span id="value2">100</span>,000</p>
+        </div>
+    
+        <div id="unemploy_bar" style="height: 500;" >
+            <script type="text/javascript" src="unemploy.js"></script>
+        </div>
+
+
+        <div class="pageNo3">
+            <h3 >4</h3>
+        </div>
+
+    </div>
+
+  
+    <div class="p_4">
+        <section class="part_4" >
+            <h3 id='part4_title'>Part4: Does Mental Health Provier Population Enough to Help People who Have Mental Illness?</h3>
+            <div id='provider_description2'>
+                Through comparing the two years' Mental Health Provier and suicide population, <br>for some states,
+                the mental health provider population is not enough. Those states <br> whose mental health provider population
+                is high has less suicide rate.
+            </div>
+        </section>
+    
+        <!-- <div id="provier_line" style="height: 400;">
+            
+        </div> -->
+    
+        <section class="provider_title" >
+            <h3 id='provtitle1'>Mental provier and suicide population</h3>
+    
+        </section>
+    
+    
+        
+            <div id='tooltipNew3'>
+                <p><strong>population</strong>
+                </p>
+                <p><span id="value3">100</span>,000</p>
+            </div>
+        
+            <section class="drop3" >
+                <text id = "s1" fill='black' >State</text>
+                <select id="dropdown3">
+        
+                </select>
+            </section>
+        
+        
+            <div id="providerBar" >
+            
+        </div>
+
+        <div class="pageNo4">
+            <h3 >5</h3>
+        </div>
+
+    </div>
+    
+   
+    
+</body>
+
+<script src = "pieCh.js"></script>
+<script defer src='script.js'></script>
+<script src = "dropdown_options.js"></script> 
+<script src = "providerBar.js"></script> 
+
+
+
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- <script defer src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script> -->
+</html>

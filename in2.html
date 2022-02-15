@@ -1,0 +1,75 @@
+<html>
+<head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        text
+        {
+            font-size: 15px;
+            font-weight: bold;
+            fill: white;
+        }
+    </style>
+</head>
+<body>
+	<script>
+		var data1 = [2, 4, 8, 10];
+        var color = d3.scaleOrdinal(['#FF96C5', '#4daf4a', '#377eb8', '#ff7f00', '#984ea3', '#e41a1c', '#FF1493']);
+        var str1 = "[{ 'label': 'Abulia', 'count': 10 }, { 'label': 'Betelgeuse', 'count': 20 }, { 'label': 'Cantaloupe', 'count': 30 },{ 'label': 'Dijkstra', 'count': 40 }]";
+        var dic1 = {"sfs":2,"sdf":2,"gfg":3,"dgdf":5};
+        var jsonArray = eval(str1);
+
+        var legendRectSize = 18;                                  // NEW
+        var legendSpacing = 4;                                    // NEW
+
+      
+         var dataset = [
+                  { 'label': 'Abulia', 'count': 10 }, 
+                  { 'label': 'Betelgeuse', 'count': 20 },
+                  { 'label': 'Cantaloupe', 'count': 30 },
+                  { 'label': 'Dijkstra', 'count': 40 }
+                ];
+      //	<svg width="600" height="500"> </svg>
+		var width = 600, height = 500;
+
+		var svg = d3.select("body").append("svg").attr("width",width).attr("height", height)
+        			.style("background","pink");
+			
+			//radius = Math.min(width, height) / 2,
+			//g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      	var data = d3.pie().sort(null).value(function(d) {return d.count})(jsonArray);
+      	console.log(data);
+        var segments = d3.arc().innerRadius(0)
+                      .outerRadius(200)
+                      .padAngle(.05)
+                      .padRadius(50);
+      
+      	var sections = svg.append("g").attr("transform", "translate(250,250)")
+        				.selectAll("path").data(data);
+      
+      	sections.enter().append("path").attr("d",segments).attr("fill",
+          function(d) {return color(d.data.count);});
+        
+        var content = d3.select("g").selectAll("text").data(data);
+        content.enter().append("text").each(function(d) {
+            var center = segments.centroid(d);
+            d3.select(this).attr("x", center[0]).attr("y", center[1]).text(d.data.count);
+        });
+
+        var legends = svg.append("g").attr("transform","translate(500,300)")
+                .selectAll(".legends").data(data);
+        var legend = legends.enter().append("g").classed("legends"
+        , true).attr("transform", function(d,i){return "translate(0," + (i + 1)*30 +
+            ")";});
+
+        legend.append("rect").attr("width",20).attr("height", 20).attr("fill", 
+                function(d){return color(d.data.count);});
+        legend.append("text").text(function(d) {return d.data.label;})
+            .attr("fill", function(d){return color(d.data.count);})
+            .attr("x",10).attr("y",10);
+	
+
+		
+	</script>
+</body>
+</html>
